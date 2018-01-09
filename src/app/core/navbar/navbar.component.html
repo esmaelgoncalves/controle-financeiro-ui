@@ -1,0 +1,16 @@
+<nav class="cf-navbar">
+   <div class="cf-container">
+      <div class="ui-g">
+         <div class="ui-g-12">
+            <a href="javascript:;" class="cf-navbar-toogle" (click)="exibindoMenu = !exibindoMenu"><i class="fa fa-bars"></i></a>
+         </div>
+      </div>
+   </div>
+
+   <ul class="cf-navbar-menu" [hidden]="!exibindoMenu">
+      <li class="cf-navbar-usuario">Esmael</li>
+      <li class="cf-navbar-menuitem"><a href="#">Lançamentos</a></li>
+      <li class="cf-navbar-menuitem"><a href="#">Pessoas</a></li>
+      <li class="cf-navbar-menuitem"><a href="#">Logout</a></li>
+   </ul>
+</nav>
