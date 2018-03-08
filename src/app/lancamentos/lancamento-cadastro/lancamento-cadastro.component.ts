@@ -1,3 +1,10 @@
+import { MessageService } from 'primeng/components/common/messageservice';
+import { LancamentoService } from './../lancamento.service';
+import { FormControl } from '@angular/forms';
+import { Lancamento } from './../../core/model/model';
+import { PessoaService } from './../../pessoas/pessoa.service';
+import { ErrorHandlerService } from './../../core/error-handler.service';
+import { CategoriaService } from './../../categorias/categoria.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -12,23 +19,57 @@ export class LancamentoCadastroComponent implements OnInit {
       { label: 'Despesa', value: 'DESPESA' },
    ];
 
-   categorias = [
-      { label: 'Alimentação', value: '1' },
-      { label: 'Transporte', value: '2' },
-      { label: 'Estudos', value: '3' },
-      { label: 'Outros', value: '4' }
-   ];
+   categorias = [ ];
+   pessoas = [ ];
 
-   pessoas = [
-      { label: 'José da Silva', value: '1' },
-      { label: 'João Rufino', value: '2' },
-      { label: 'Pedro Barbosa', value: '3' },
-      { label: 'Vanderlei Silva', value: '4' }
-   ];
+   lancamento = new Lancamento();
 
-   constructor() { }
+   constructor(
+       private pessoaService: PessoaService,
+       private categoriaService: CategoriaService,
+       private lancamentoService: LancamentoService,
+       private errorHandlerService: ErrorHandlerService,
+       private messageService: MessageService
+   ) { }
 
    ngOnInit() {
+       this.carregarCategorias();
+       this.carregarPessoas();
+   }
+
+   salvar(form: FormControl) {
+       this.lancamentoService.adicionar(this.lancamento)
+       .then(() => {
+           this.messageService.add({ severity: 'success', summary: 'Novo Lançamento', detail: 'Lançamento adicionado com sucesso!' })
+
+           form.reset();
+           this.lancamento = new Lancamento();
+       })
+       .catch(error => this.errorHandlerService.handle(error));
+   }
+
+   carregarCategorias() {
+       this.categoriaService.listarTodas()
+       .then(categorias => {
+           this.categorias = categorias.map(cat => {
+               return {
+                   label: cat.nome,
+                   value: cat.codigo
+               }
+           });
+       })
+       .catch(error =>this.errorHandlerService.handle(error));
+   }
+
+   carregarPessoas(){
+       this.pessoaService.pesquisarTodos()
+       .then(pessoas => {
+           this.pessoas = pessoas.map(pes => ({
+              label: pes.nome,
+              value: pes.codigo
+           }))
+       })
+       
    }
 
 }

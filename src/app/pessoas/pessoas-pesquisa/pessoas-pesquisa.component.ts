@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { PessoasGridComponent } from './../pessoas-grid/pessoas-grid.component';
+import { ErrorHandlerService } from './../../core/error-handler.service';
+import { ConfirmationService } from 'primeng/components/common/api';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { PessoaFiltro, PessoaService } from './../pessoa.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
+import { LazyLoadEvent } from 'primeng/components/common/api';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
@@ -7,13 +14,66 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PessoasPesquisaComponent {
 
-  pessoas = [
-    { nome: 'Manoel Pinheiro', cidade: 'Uberlândia', estado: 'MG', ativo: true },
-    { nome: 'Sebastião da Silva', cidade: 'São Paulo', estado: 'SP', ativo: false },
-    { nome: 'Carla Souza', cidade: 'Florianópolis', estado: 'SC', ativo: true },
-    { nome: 'Luís Pereira', cidade: 'Curitiba', estado: 'PR', ativo: true },
-    { nome: 'Vilmar Andrade', cidade: 'Rio de Janeiro', estado: 'RJ', ativo: false },
-    { nome: 'Paula Maria', cidade: 'Uberlândia', estado: 'MG', ativo: true }
-  ];
+  filtro = new PessoaFiltro();
+  totalRegistros = 0;
+  pessoas = [ ];
+
+  //@ViewChild('PessoasGridComponent') gridComponent: PessoasGridComponent;
+  @ViewChild('tabela') tabela;
+
+  constructor(
+    private pessoasService: PessoaService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private errorHandlerService: ErrorHandlerService){}
+
+  pesquisar(pagina = 0) {
+    this.filtro.pagina = pagina;
+
+    this.pessoasService.pesquisar(this.filtro)
+      .then(resultado => {
+        this.totalRegistros = resultado.total;
+        this.pessoas = resultado.pessoas;
+      });
+  }
+
+  aoMudarPagina(pagina){
+    this.pesquisar(pagina);
+  }
+
+   confirmarExclusao(pessoa: any) {
+    this.confirmationService.confirm({
+      message: 'Confirma a exclusão?',
+      accept: () => {
+        this.excluir(pessoa);
+      }
+    });
+  }
+
+  excluir(pessoa: any) {
+    this.pessoasService.excluir(pessoa.codigo)
+      .then(() => {
+        if (this.tabela.first === 0) {
+          this.pesquisar();
+        } else {
+          this.tabela.first = 0;
+        }
+        this.messageService.add({ severity: 'success', summary: 'Exclusão', detail: 'Pessoa excluída com sucesso!' });
+      })
+       .catch(error => this.errorHandlerService.handle(error));
+  }
+
+  atualizarStatus(pessoa: any){
+    this.pessoasService.atualizar(pessoa.codigo,!pessoa.ativo)
+      .then(() => {
+        if (this.tabela.first === 0) {
+          this.pesquisar();
+        } else {
+          this.tabela.first = 0;
+        }
+        this.messageService.add({ severity: 'success', summary: 'Atualização', detail: 'Pessoa atualizada com sucesso!' });
+      })
+       .catch(error => this.errorHandlerService.handle(error));
+  }
 
 }
