@@ -7,6 +7,7 @@ import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
 import { LazyLoadEvent } from 'primeng/components/common/api';
 //import { ToastyService } from "ng2-toasty";
 import { MessageService } from "primeng/components/common/messageservice";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -26,9 +27,11 @@ export class LancamentosPesquisaComponent implements OnInit {
     //private toasty: ToastyService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private errorHandlerService: ErrorHandlerService) { }
+    private errorHandlerService: ErrorHandlerService,
+    private title: Title) { }
 
   ngOnInit() {
+    this.title.setTitle("Pesquisa de Lançamentos");
   }
 
 

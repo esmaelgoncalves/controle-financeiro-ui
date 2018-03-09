@@ -12,6 +12,7 @@ import { CommonsModule } from './../commons/commons.module';
 import { PessoasGridComponent } from './pessoas-grid/pessoas-grid.component';
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
+import { PessoasRoutingModule } from './pessoas-routing,module';
 
 
 
@@ -19,6 +20,8 @@ import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.compo
   imports: [
     CommonModule,
     FormsModule,
+
+    PessoasRoutingModule,
 
     CommonsModule,
 
@@ -33,9 +36,6 @@ import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.compo
      PessoasPesquisaComponent,
      PessoasGridComponent
   ],
-   exports: [
-      PessoaCadastroComponent,
-      PessoasPesquisaComponent
-   ]
+   exports: [ ]
 })
 export class PessoasModule { }

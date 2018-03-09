@@ -1,3 +1,4 @@
+import { LancamentosRoutingModule } from './lancamentos-routing.module';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -22,8 +23,9 @@ import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos
    imports: [
       CommonModule,
       FormsModule,
-
       CommonsModule,
+
+      LancamentosRoutingModule,
 
       InputTextModule,
       ButtonModule,
@@ -40,9 +42,6 @@ import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos
       LancamentoCadastroComponent,
       LancamentosGridComponent
    ],
-   exports: [
-      LancamentoCadastroComponent,
-      LancamentosPesquisaComponent
-   ]
+   exports: []
 })
 export class LancamentosModule { }

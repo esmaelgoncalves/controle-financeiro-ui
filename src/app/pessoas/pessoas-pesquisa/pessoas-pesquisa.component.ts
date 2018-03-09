@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { PessoasGridComponent } from './../pessoas-grid/pessoas-grid.component';
 import { ErrorHandlerService } from './../../core/error-handler.service';
 import { ConfirmationService } from 'primeng/components/common/api';
@@ -12,11 +13,11 @@ import { LazyLoadEvent } from 'primeng/components/common/api';
   templateUrl: './pessoas-pesquisa.component.html',
   styleUrls: ['./pessoas-pesquisa.component.css']
 })
-export class PessoasPesquisaComponent {
+export class PessoasPesquisaComponent implements OnInit {
 
   filtro = new PessoaFiltro();
   totalRegistros = 0;
-  pessoas = [ ];
+  pessoas = [];
 
   //@ViewChild('PessoasGridComponent') gridComponent: PessoasGridComponent;
   @ViewChild('tabela') tabela;
@@ -25,7 +26,12 @@ export class PessoasPesquisaComponent {
     private pessoasService: PessoaService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private errorHandlerService: ErrorHandlerService){}
+    private errorHandlerService: ErrorHandlerService,
+    private title: Title) { }
+
+  ngOnInit(): void {
+    this.title.setTitle("Pesquisa de Pessoas");
+  }
 
   pesquisar(pagina = 0) {
     this.filtro.pagina = pagina;
@@ -37,11 +43,11 @@ export class PessoasPesquisaComponent {
       });
   }
 
-  aoMudarPagina(pagina){
+  aoMudarPagina(pagina) {
     this.pesquisar(pagina);
   }
 
-   confirmarExclusao(pessoa: any) {
+  confirmarExclusao(pessoa: any) {
     this.confirmationService.confirm({
       message: 'Confirma a exclusão?',
       accept: () => {
@@ -60,11 +66,11 @@ export class PessoasPesquisaComponent {
         }
         this.messageService.add({ severity: 'success', summary: 'Exclusão', detail: 'Pessoa excluída com sucesso!' });
       })
-       .catch(error => this.errorHandlerService.handle(error));
+      .catch(error => this.errorHandlerService.handle(error));
   }
 
-  atualizarStatus(pessoa: any){
-    this.pessoasService.atualizar(pessoa.codigo,!pessoa.ativo)
+  atualizarStatus(pessoa: any) {
+    this.pessoasService.atualizar(pessoa.codigo, !pessoa.ativo)
       .then(() => {
         if (this.tabela.first === 0) {
           this.pesquisar();
@@ -73,7 +79,7 @@ export class PessoasPesquisaComponent {
         }
         this.messageService.add({ severity: 'success', summary: 'Atualização', detail: 'Pessoa atualizada com sucesso!' });
       })
-       .catch(error => this.errorHandlerService.handle(error));
+      .catch(error => this.errorHandlerService.handle(error));
   }
 
 }

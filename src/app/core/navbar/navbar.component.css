@@ -43,3 +43,7 @@
 .cf-navbar-menuitem a:hover{
  color: #fff;
 }
+
+.cf-navbar-menuitem.ativo{
+    background-color: #494541;
+}

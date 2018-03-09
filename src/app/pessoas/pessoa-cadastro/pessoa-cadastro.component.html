@@ -63,8 +63,9 @@
 
          <div class="ui-g-12">
             <button pButton type="submit" label="Salvar" [disabled]="pessoaForm.invalid"></button>
-            <button pButton type="button" label="Novo" class="ui-button-info"></button>
-            <a href="#">Voltar para a pesquisa</a>
+            <button pButton type="button" label="Novo" class="ui-button-info"
+             (click)="novo(pessoaForm)"></button>
+            <a routerLink="/pessoas">Voltar para a pesquisa</a>
          </div>
       </div>
    </form>

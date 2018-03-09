@@ -77,10 +77,52 @@ export class LancamentoService {
     const headers = new Headers();
     headers.append('Authorization', 'Basic YWRtaW5AZWdwLWNvbnRyb2xlZmluYW5jZWlyby5jb206YWRtaW4=');
     headers.append('Content-Type', 'application/json');
-
+    console.log(JSON.stringify(lancamento));
     return this.http.post(this.lancamentosUrl, JSON.stringify(lancamento), { headers })
       .toPromise()
       .then(response => response.json());
   }
 
+  atualizar(lancamento: Lancamento): Promise<Lancamento> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AZWdwLWNvbnRyb2xlZmluYW5jZWlyby5jb206YWRtaW4=');
+    headers.append('Content-Type', 'application/json');
+    console.log(JSON.stringify(lancamento));
+    return this.http.put(`${this.lancamentosUrl}/${lancamento.codigo}`, JSON.stringify(lancamento), { headers })
+      .toPromise()
+      .then(response => {
+        const lancamentoAlterado = response.json() as Lancamento;
+        console.log("Lancamento alterado: " + lancamentoAlterado);
+        this.converterStringsParaDatas([lancamentoAlterado]);
+
+        return lancamentoAlterado;
+      });
+  }
+
+  buscarPorCodigo(codigo: number): Promise<Lancamento> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AZWdwLWNvbnRyb2xlZmluYW5jZWlyby5jb206YWRtaW4=');
+
+    return this.http.get(`${this.lancamentosUrl}/${codigo}?resumo`, { headers })
+      .toPromise()
+      .then(response => {
+        const lancamento = response.json() as Lancamento;
+
+        this.converterStringsParaDatas([lancamento]);
+
+        return lancamento;
+      });
+  }
+
+  private converterStringsParaDatas(lancamentos: Lancamento[]) {
+    for (const lancamento of lancamentos) {
+      lancamento.dataVencimento = moment(lancamento.dataVencimento,
+        'YYYY-MM-DD').toDate();
+
+      if (lancamento.dataPagamento) {
+        lancamento.dataPagamento = moment(lancamento.dataPagamento,
+          'YYYY-MM-DD').toDate();
+      }
+    }
+  }
 }
