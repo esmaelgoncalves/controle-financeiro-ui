@@ -6,7 +6,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class CategoriaService {
 
-  categoriasUrl = 'https://egp-controlefinanceiro-api.herokuapp.com/categorias';
+  categoriasUrl = 'http://localhost:8080/categorias';
 
   constructor(private http: Http) { }
 

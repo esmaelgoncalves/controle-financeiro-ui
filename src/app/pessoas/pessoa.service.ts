@@ -14,7 +14,7 @@ export class PessoaFiltro {
 @Injectable()
 export class PessoaService {
 
-  pessoasUrl = 'https://egp-controlefinanceiro-api.herokuapp.com/pessoas';
+  pessoasUrl = 'http://localhost:8080/pessoas';
 
   constructor(private http: Http) { }
 

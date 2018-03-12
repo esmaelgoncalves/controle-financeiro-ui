@@ -17,7 +17,7 @@ export class LancamentoFiltro {
 @Injectable()
 export class LancamentoService {
 
-  lancamentosUrl = 'https://egp-controlefinanceiro-api.herokuapp.com/lancamentos';
+  lancamentosUrl = 'http://localhost:8080/lancamentos';
 
   constructor(private http: Http) { }
 

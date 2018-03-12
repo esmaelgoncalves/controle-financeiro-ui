@@ -1,3 +1,4 @@
+import { SegurancaRoutingModule } from './seguranca/seguranca-routing,module';
 import { LancamentosRoutingModule } from './lancamentos/lancamentos-routing.module';
 import { PessoasRoutingModule } from './pessoas/pessoas-routing,module';
 import { PaginaNaoEncontradaComponent } from './core/pagina-nao-encontrada.component';
@@ -20,7 +21,8 @@ const routes: Routes = [
     imports: [
         RouterModule.forRoot(routes),
         PessoasRoutingModule,
-        LancamentosRoutingModule
+        LancamentosRoutingModule,
+        SegurancaRoutingModule
     ],
     exports:[RouterModule]
 })

@@ -1,3 +1,4 @@
+import { SegurancaModule } from './seguranca/seguranca.module';
 import { PaginaNaoEncontradaComponent } from './core/pagina-nao-encontrada.component';
 import { PessoaCadastroComponent } from './pessoas/pessoa-cadastro/pessoa-cadastro.component';
 import { PessoasPesquisaComponent } from './pessoas/pessoas-pesquisa/pessoas-pesquisa.component';
@@ -29,7 +30,8 @@ import { PessoasModule } from './pessoas/pessoas.module';
 
         LancamentosModule,
         PessoasModule,
-        CoreModule
+        CoreModule,
+        SegurancaModule
     ],
     providers: [],
     bootstrap: [AppComponent]
