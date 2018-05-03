@@ -43,7 +43,8 @@ export class PessoasPesquisaComponent implements OnInit {
       });
   }
 
-  aoMudarPagina(pagina) {
+  aoMudarPagina(event: LazyLoadEvent) {
+    const pagina = event.first / event.rows;
     this.pesquisar(pagina);
   }
 
