@@ -1,3 +1,4 @@
+import { AuthService } from './../seguranca/auth.service';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NgModule, LOCALE_ID } from '@angular/core';
@@ -7,6 +8,8 @@ import { CommonModule } from '@angular/common';
 //PrimeNG Modules
 import { GrowlModule } from 'primeng/components/growl/growl';
 import { ConfirmDialogModule } from 'primeng/components/confirmdialog/confirmdialog';
+
+import { JwtHelper } from 'angular2-jwt';
 
 //Services
 import { MessageService } from 'primeng/components/common/messageservice';
@@ -38,6 +41,8 @@ import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component'
     ErrorHandlerService,
     CategoriaService,
     Title,
+    AuthService,
+    JwtHelper,
     { provide: LOCALE_ID, useValue: 'pt-BR' }
 
   ]
