@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { ErrorHandlerService } from './../../core/error-handler.service';
 import { AuthService } from './../auth.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,13 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private auth: AuthService) { }
+  constructor(
+    private auth: AuthService, 
+    private errorHandlerService: ErrorHandlerService,
+    private router: Router) { }
 
   ngOnInit() {
   }
 
-  login(usuario: string, senha: string){
-    this.auth.login(usuario, senha);
+  login(usuario: string, senha: string) {
+    this.auth.login(usuario, senha)
+      .then(() =>{
+        this.router.navigate(['/lancamentos']);
+      })
+      .catch(error => {
+        this.errorHandlerService.handle(error);
+      });
   }
 
 }

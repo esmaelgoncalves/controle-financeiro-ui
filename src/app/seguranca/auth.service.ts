@@ -25,10 +25,16 @@ export class AuthService {
       .toPromise()
       .then(response => {
         this.amarzenarToken(response.json().access_token)
-        console.log(response);
       })
       .catch(response => {
-        console.log(response);
+        if (response.status === 400) {
+          const responseJson = response.json();
+
+          if (responseJson.error === 'invalid_grant') {
+            return Promise.reject('Usuário ou Senha Inválidos')
+          }
+        }
+        return Promise.reject(response);
       });
   }
 
