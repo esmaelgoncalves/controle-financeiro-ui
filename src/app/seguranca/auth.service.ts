@@ -24,14 +24,14 @@ export class AuthService {
     return this.http.post(this.oauthTokenUrl, body, { headers })
       .toPromise()
       .then(response => {
-        this.amarzenarToken(response.json().access_token)
+        this.amarzenarToken(response.json().access_token);
       })
       .catch(response => {
         if (response.status === 400) {
           const responseJson = response.json();
 
           if (responseJson.error === 'invalid_grant') {
-            return Promise.reject('Usuário ou Senha Inválidos')
+            return Promise.reject('Usuário ou Senha Inválidos');
           }
         }
         return Promise.reject(response);
@@ -49,5 +49,9 @@ export class AuthService {
     if (token) {
       this.amarzenarToken(token);
     }
+  }
+
+  temPermissao(permissao: string) {
+     return this.jwtPayload &&  this.jwtPayload.authorities.includes(permissao);
   }
 }
