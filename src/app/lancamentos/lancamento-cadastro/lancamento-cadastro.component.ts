@@ -7,7 +7,7 @@ import { PessoaService } from './../../pessoas/pessoa.service';
 import { ErrorHandlerService } from './../../core/error-handler.service';
 import { CategoriaService } from './../../categorias/categoria.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-lancamento-cadastro',
@@ -37,7 +37,7 @@ export class LancamentoCadastroComponent implements OnInit {
         private title: Title
     ) { }
 
-    ngOnInit() {     
+    ngOnInit() {
         this.title.setTitle('Novo Lançamento');
 
         const codigoLancamento = this.route.snapshot.params['codigo'];
@@ -70,7 +70,7 @@ export class LancamentoCadastroComponent implements OnInit {
     adicionarLancamento(form: FormControl) {
         this.lancamentoService.adicionar(this.lancamento)
             .then(lancamentoAdicionado => {
-                this.messageService.add({ severity: 'success', summary: 'Novo Lançamento', detail: 'Lançamento adicionado com sucesso!' })
+                this.messageService.add({ severity: 'success', summary: 'Novo Lançamento', detail: 'Lançamento adicionado com sucesso!' });
 
                 this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);
             })
@@ -82,7 +82,12 @@ export class LancamentoCadastroComponent implements OnInit {
             .then(lancamento => {
                 this.lancamento = lancamento;
                 this.atualizarTituloEdicao();
-                this.messageService.add({ severity: 'success', summary: 'Atualização Lançamento', detail: 'Lançamento atualizado com sucesso!' })
+                this.messageService.add(
+                   { severity: 'success',
+                     summary: 'Atualização Lançamento',
+                     detail: 'Lançamento atualizado com sucesso!'
+                  }
+               );
             })
             .catch(error => this.errorHandlerService.handle(error));
     }
@@ -94,7 +99,7 @@ export class LancamentoCadastroComponent implements OnInit {
                     return {
                         label: cat.nome,
                         value: cat.codigo
-                    }
+                     };
                 });
             })
             .catch(error => this.errorHandlerService.handle(error));
@@ -106,22 +111,21 @@ export class LancamentoCadastroComponent implements OnInit {
                 this.pessoas = pessoas.map(pes => ({
                     label: pes.nome,
                     value: pes.codigo
-                }))
-            })
+                }));
+            });
 
     }
 
-    novo(form: FormControl){
+    novo(form: FormControl) {
         form.reset();
 
         setTimeout(function(){
             this.lancamento = new Lancamento();
         }.bind(this), 1);
-        
-        this.router.navigate(['/lancamentos/novo'])
+        this.router.navigate(['/lancamentos/novo']);
     }
 
-    atualizarTituloEdicao(){
+    atualizarTituloEdicao() {
         this.title.setTitle(`Edição de lançamento: ${this.lancamento.descricao}`);
     }
 

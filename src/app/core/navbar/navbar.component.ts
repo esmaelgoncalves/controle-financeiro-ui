@@ -1,16 +1,30 @@
+import { Router } from '@angular/router';
+import { LogoutService } from './../../seguranca/logout.service';
 import { AuthService } from './../../seguranca/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { ErrorHandlerService } from '../error-handler.service';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+   selector: 'app-navbar',
+   templateUrl: './navbar.component.html',
+   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private auth: AuthService) { }
+   constructor(
+      private auth: AuthService,
+      private logoutService: LogoutService,
+      private errorHandler: ErrorHandlerService,
+      private router: Router) { }
 
-  ngOnInit() {
-  }
+   ngOnInit() {
+   }
 
+   logout() {
+      this.logoutService.logout()
+         .then(() => {
+            this.router.navigate(['/login']);
+         })
+         .catch(error => this.errorHandler.handle(error));
+   }
 }

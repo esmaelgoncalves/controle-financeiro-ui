@@ -5,9 +5,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
 
 import { LazyLoadEvent } from 'primeng/components/common/api';
-//import { ToastyService } from "ng2-toasty";
-import { MessageService } from "primeng/components/common/messageservice";
-import { Title } from "@angular/platform-browser";
+import { MessageService } from 'primeng/components/common/messageservice';
+import { AuthService } from '../../seguranca/auth.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -24,14 +24,15 @@ export class LancamentosPesquisaComponent implements OnInit {
 
   constructor(
     private lancamentosService: LancamentoService,
-    //private toasty: ToastyService,
+    // private toasty: ToastyService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private errorHandlerService: ErrorHandlerService,
-    private title: Title) { }
+    private title: Title,
+    private auth: AuthService) { }
 
   ngOnInit() {
-    this.title.setTitle("Pesquisa de Lançamentos");
+    this.title.setTitle('Pesquisa de Lançamentos');
   }
 
 
@@ -69,9 +70,8 @@ export class LancamentosPesquisaComponent implements OnInit {
           this.grid.first = 0;
         }
         this.messageService.add({ severity: 'success', summary: 'Exclusão', detail: 'Lançamento excluído com sucesso!' });
-        //this.toasty.success('Lançamento excluído com sucesso!');
       })
-       .catch(error => this.errorHandlerService.handle(error));;
+       .catch(error => this.errorHandlerService.handle(error));
   }
 
 }

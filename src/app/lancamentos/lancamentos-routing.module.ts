@@ -1,22 +1,37 @@
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
 
-//Angular Modules
-import { HttpModule } from "@angular/http";
+// Angular Modules
+import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [
-    { path: '', redirectTo: 'lancamentos', pathMatch: 'full' },
-    { path: 'lancamentos', component: LancamentosPesquisaComponent },
-    { path: 'lancamentos/novo', component: LancamentoCadastroComponent },
-    { path: 'lancamentos/:codigo', component: LancamentoCadastroComponent }
+import { AuthGuard } from '../seguranca/auth.guard';
 
-];
+const routes: Routes = [
+   {
+     path: 'lancamentos',
+     component: LancamentosPesquisaComponent,
+     canActivate: [AuthGuard],
+     data: { roles: ['ROLE_PESQUISAR_LANCAMENTO'] }
+   },
+   {
+     path: 'lancamentos/novo',
+     component: LancamentoCadastroComponent,
+     canActivate: [AuthGuard],
+     data: { roles: ['ROLE_CADASTRAR_LANCAMENTO'] }
+   },
+   {
+     path: 'lancamentos/:codigo',
+     component: LancamentoCadastroComponent,
+     canActivate: [AuthGuard],
+     data: { roles: ['ROLE_CADASTRAR_LANCAMENTO'] }
+   }
+ ];
 @NgModule({
     imports: [
         RouterModule.forChild(routes)
     ],
-    exports:[RouterModule]
+    exports: [RouterModule]
 })
 export class LancamentosRoutingModule { }

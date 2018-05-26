@@ -1,3 +1,5 @@
+import { AuthGuard } from './auth.guard';
+import { ControleFinanceiroHttp } from './controle-financeiro-http';
 import { Http, RequestOptions } from '@angular/http';
 import { SegurancaRoutingModule } from './seguranca-routing,module';
 import { ButtonModule } from 'primeng/components/button/button';
@@ -7,14 +9,16 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { InputTextModule } from 'primeng/components/inputtext/inputtext';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { AuthService } from './auth.service';
+import { LogoutService } from './logout.service';
 
-export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+export function authHttpServiceFactory(auth: AuthService, http: Http, options: RequestOptions) {
    const config = new AuthConfig({
       globalHeaders: [
          {'Content-Type': 'application/json'}
       ]
    });
-   return new AuthHttp(config, http);
+   return new ControleFinanceiroHttp(auth, config, http, options);
 }
 
 @NgModule({
@@ -31,8 +35,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
      {
         provide: AuthHttp,
         useFactory: authHttpServiceFactory,
-        deps: [Http, RequestOptions]
-     }
+        deps: [AuthService, Http, RequestOptions]
+     },
+     AuthGuard,
+     LogoutService
   ]
 })
 export class SegurancaModule { }
