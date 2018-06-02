@@ -13,7 +13,7 @@ import { NaoAutorizadoComponent } from './core/nao-autorizado.component';
 
 
 const routes: Routes = [
-    { path: '', redirectTo: 'pagina-nao-encontrada', pathMatch: 'full'},
+    { path: '', redirectTo: 'lancamentos', pathMatch: 'full'},
     { path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent},
     { path: 'nao-autorizado', component: NaoAutorizadoComponent },
     { path: '**', redirectTo: 'pagina-nao-encontrada' }
