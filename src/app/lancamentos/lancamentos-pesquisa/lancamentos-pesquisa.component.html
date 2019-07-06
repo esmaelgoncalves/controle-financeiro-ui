@@ -33,12 +33,53 @@
     <div class="ui-g">
         <div class="ui-g-12">
             <!--<app-lancamentos-grid [lancamentos] = "lancamentos"></app-lancamentos-grid> -->
-            <p-dataTable [value]="lancamentos" [responsive]="true"
+            <p-table [value]="lancamentos" [responsive]="true"
                 emptyMessage="Nenhum registro encontrado."
                 [paginator]="true" [rows]="filtro.itensPorPagina"
                 [lazy]="true" [totalRecords]="totalRegistros"
                 (onLazyLoad)="aoMudarPagina($event)"
                 #tabela>
+
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Pessoa</th>
+                    <th>Descrição</th>
+                    <th class="col-data-header">Vencimento</th>
+                    <th class="col-data-header">Pagamento</th>
+                    <th class="col-valor-header">Valor</th>
+                    <th class="col-acoes-header"></th>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-lancamento>
+                  <tr>
+                    <td>{{ lancamento.pessoa }}</td>
+                    <td>{{ lancamento.descricao }}</td>
+                    <td class="col-data">{{ lancamento.dataVencimento | date:'dd/MM/yyyy' }}</td>
+                    <td class="col-data">{{ lancamento.dataPagamento | date:'dd/MM/yyyy' }}</td>
+                    <td class="col-valor" [style.color]="lancamento.tipo === 'DESPESA' ? 'red' : 'blue'">
+                      {{ lancamento.valor | number:'1.2-2' }}</td>
+                    <td class="col-acoes">
+                      <button pButton icon="fa-pencil" pTooltip="Editar"
+                        tooltipPosition="top"
+                        [routerLink]="['/lancamentos', lancamento.codigo]"></button>
+
+                      <button pButton icon="fa-trash"
+                        pTooltip="Excluir" tooltipPosition="top"
+                        (click)="confirmarExclusao(lancamento)"
+                        [disabled]="!auth.temPermissao('ROLE_REMOVER_LANCAMENTO')"></button>
+                    </td>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="6">
+                      Nenhum lançamento encontrado
+                    </td>
+                  </tr>
+                </ng-template>
+
                 <p-column header="Pessoa" field="pessoa"></p-column>
                 <p-column header="Descrição" field="descricao"></p-column>
                 <p-column header="Vencimento" styleClass="cf-col-data" field="dataVencimento">
@@ -65,7 +106,7 @@
                         [disabled]="!auth.temPermissao('ROLE_REMOVER_LANCAMENTO')"></button>
                     </ng-template>
                 </p-column>
-            </p-dataTable>
+            </p-table>
         </div>
 
         <div class="ui-g-12">

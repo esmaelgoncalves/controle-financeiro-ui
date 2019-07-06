@@ -1,12 +1,11 @@
 import { Title } from '@angular/platform-browser';
-import { PessoasGridComponent } from './../pessoas-grid/pessoas-grid.component';
 import { ErrorHandlerService } from './../../core/error-handler.service';
-import { ConfirmationService } from 'primeng/components/common/api';
+import { ConfirmationService } from 'primeng//api';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { PessoaFiltro, PessoaService } from './../pessoa.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { LazyLoadEvent } from 'primeng/components/common/api';
+import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
@@ -19,7 +18,6 @@ export class PessoasPesquisaComponent implements OnInit {
   totalRegistros = 0;
   pessoas = [];
 
-  //@ViewChild('PessoasGridComponent') gridComponent: PessoasGridComponent;
   @ViewChild('tabela') tabela;
 
   constructor(

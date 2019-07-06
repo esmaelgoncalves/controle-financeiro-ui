@@ -14,8 +14,6 @@ import { AppRoutingModule } from './app-routing.module';
 //App Components
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { LancamentosModule } from './lancamentos/lancamentos.module';
-import { PessoasModule } from './pessoas/pessoas.module';
 
 @NgModule({
     declarations: [
@@ -25,11 +23,9 @@ import { PessoasModule } from './pessoas/pessoas.module';
         BrowserModule,
         BrowserAnimationsModule,
         HttpModule,
-        
+
         AppRoutingModule,
 
-        LancamentosModule,
-        PessoasModule,
         CoreModule,
         SegurancaModule
     ],
