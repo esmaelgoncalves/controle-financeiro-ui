@@ -49,7 +49,7 @@
                <a href="javascript:;"
                  [pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'"
                  tooltipPosition="top"
-                 (click)="alternarStatus(pessoa)">
+                 (click)="atualizarStatus(pessoa)">
                  {{ pessoa.ativo ? 'Ativo' : 'Inativo' }}
                </a>
              </td>

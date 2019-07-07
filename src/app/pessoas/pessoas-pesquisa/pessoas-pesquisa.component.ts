@@ -63,6 +63,7 @@ export class PessoasPesquisaComponent implements OnInit {
           this.pesquisar();
         } else {
           this.tabela.first = 0;
+          this.pesquisar();
         }
         this.messageService.add({ severity: 'success', summary: 'Exclusão', detail: 'Pessoa excluída com sucesso!' });
       })
@@ -76,6 +77,7 @@ export class PessoasPesquisaComponent implements OnInit {
           this.pesquisar();
         } else {
           this.tabela.first = 0;
+          this.pesquisar();
         }
         this.messageService.add({ severity: 'success', summary: 'Atualização', detail: 'Pessoa atualizada com sucesso!' });
       })

@@ -68,6 +68,7 @@ export class LancamentosPesquisaComponent implements OnInit {
           this.pesquisar();
         } else {
           this.grid.first = 0;
+          this.pesquisar();
         }
         this.messageService.add({ severity: 'success', summary: 'Exclusão', detail: 'Lançamento excluído com sucesso!' });
       })
