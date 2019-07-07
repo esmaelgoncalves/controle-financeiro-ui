@@ -1,5 +1,5 @@
 import { LancamentosRoutingModule } from './lancamentos-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -22,6 +22,7 @@ import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos
    imports: [
       CommonModule,
       FormsModule,
+      ReactiveFormsModule,
       CommonsModule,
 
       LancamentosRoutingModule,
